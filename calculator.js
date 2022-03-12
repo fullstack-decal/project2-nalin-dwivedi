@@ -47,7 +47,9 @@ document
                     if (args[0] && !args[1]) {
                         args[1] = "0";
                     }
-                    args[0] = arithmetic(args[0], args[1], curr_op);
+                    if (curr_op) {
+                        args[0] = arithmetic(args[0], args[1], curr_op);
+                    }
                     args[1] = "";
                     curr_op = "";
                     curr_arg = 0;
@@ -77,8 +79,10 @@ document
                 }
             }
         } else {
-            args[curr_arg] += event.target.innerText;
-            output = args[curr_arg];
-            updateConsole();
+            if (!(!args[curr_arg] && event.target.innerText === "0")) {
+                args[curr_arg] += event.target.innerText;
+                output = args[curr_arg];
+                updateConsole();
+            }
         }
     });
