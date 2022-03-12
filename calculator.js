@@ -9,6 +9,7 @@ function updateConsole() {
     document
         .querySelector(".result-screen")
         .innerText = output;
+    console.log(args[0], args[1]);
 }
 
 function arithmetic(x0, x1, op) {
@@ -35,7 +36,7 @@ function reset() {
 }
 
 document
-    .querySelector(".class-rows")
+    .querySelector(".calc-rows")
     .addEventListener("click", function (event) {
         const input_op = event.target.innerText;
         if (functions.includes(input_op)) {
@@ -46,7 +47,7 @@ document
                     if (args[0] && !args[1]) {
                         args[1] = "0";
                     }
-                    args[0] = arithmetic(args[0], args[1], input_op);
+                    args[0] = arithmetic(args[0], args[1], curr_op);
                     args[1] = "";
                     curr_op = "";
                     curr_arg = 0;
@@ -54,10 +55,10 @@ document
                     updateConsole();
                 }
             } else if (input_op === "←") { // curr_arg and curr_op no change
-                if (args[curr] > 0) {
-                    args[curr] = Math.floor(args[curr] / 10);
+                if (args[curr_arg] > 0) {
+                    args[curr_arg] = Math.floor(args[curr_arg] / 10);
                 }
-                output = args[curr];
+                output = args[curr_arg];
                 updateConsole();
             } else if (input_op === "C") { // reset everything
                 reset();
@@ -68,7 +69,7 @@ document
                     output = "0";
                     updateConsole();
                 } else { // arithmetic based on curr_op, set args[0] = result, curr_arg stays as 1
-                    args[0] = arithmetic(args[0], args[1], input_op);
+                    args[0] = arithmetic(args[0], args[1], curr_op);
                     args[1] = "";
                     curr_op = input_op;
                     output = "0";
@@ -76,7 +77,8 @@ document
                 }
             }
         } else {
-            args[curr] += event.target.innerText;
-            updateConsole(args[curr]);
+            args[curr_arg] += event.target.innerText;
+            output = args[curr_arg];
+            updateConsole();
         }
     });
