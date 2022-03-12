@@ -9,7 +9,6 @@ function updateConsole() {
     document
         .querySelector(".result-screen")
         .innerText = output;
-    console.log(args[0], args[1]);
 }
 
 function arithmetic(x0, x1, op) {
